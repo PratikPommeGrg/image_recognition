@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../helper/tf_lite_helper.dart';
 import '../../../providers/image/image_provider.dart';
 import '../view_model/home_screen_view_model.dart';
 import 'widgets/camera_view.dart';
@@ -34,6 +35,43 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 24,
           children: [
+            GestureDetector(
+              onTap: () {
+                final imageFile = File(ref.read(imageProvider).image!.path);
+
+                final input = tfLiteHelpter.preprocessImage(imageFile);
+
+                tfLiteHelpter.runInference(input);
+              },
+              child: Container(
+                color: Colors.pink,
+                height: 45,
+                width: 45,
+                child: Image.asset(
+                  'assets/images/chair.jpg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            AnimatedContainer(
+              height: 50,
+              width: 150,
+              curve: Curves.bounceOut,
+              duration: Duration(milliseconds: 1000),
+              decoration: BoxDecoration(
+                color: Colors.lightBlue,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Text(
+                "Recognized",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ),
             Container(
               clipBehavior: Clip.hardEdge,
               height: 400,
