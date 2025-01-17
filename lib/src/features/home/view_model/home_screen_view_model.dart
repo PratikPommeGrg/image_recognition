@@ -1,8 +1,12 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_recognition/src/providers/image/image_provider.dart';
+
+import '../../../helper/prediction_helper.dart';
+import '../../../helper/tflite_helper.dart';
 
 final homeScreenViewProvider = Provider((ref) => HomeScreenViewModel(ref));
 
@@ -33,7 +37,13 @@ class HomeScreenViewModel {
             );
           }
           if (next.status == ImageStatus.success) {
-            log("success status");
+            final imageFile = File(ref.read(imageProvider).image!.path);
+
+            final input = tfLiteHelpter.preprocessImage(imageFile);
+
+            print(
+                "prediction == :: ${predictionHelper.prediction(tfLiteHelpter.runInference(input))}");
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(

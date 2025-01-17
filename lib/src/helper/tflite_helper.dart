@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:image/image.dart' as img;
@@ -19,6 +18,10 @@ class TfLiteHelper {
   Future<Interpreter> loadModel() async {
     _interpreter =
         await Interpreter.fromAsset('assets/models/mobileNet_V2.tflite');
+
+    print('Model input shape: ${_interpreter.getInputTensor(0).shape}');
+    print('Model output shape: ${_interpreter.getOutputTensor(0).shape}');
+
     return _interpreter;
   }
 
@@ -53,32 +56,20 @@ class TfLiteHelper {
     );
   }
 
-  Future<void> runInference(input) async {
+  int runInference(input) {
     //define output tensor
     final output = List.filled(1001, 0.0).reshape([1, 1001]);
 
     //run inference
     _interpreter.run(input, output);
 
-    //get result
-    log("==============>>>==============>>>>==========>");
-    print("output: $output");
-
-    log("==============>>>==============>>>>==========>");
-
     //flatten the output tensor
     final List<double> probabilites = output[0];
-
-    log("==============>>>==============>>>>==========>");
-    print("probabilites: $probabilites");
-    log("==============>>>==============>>>>==========>");
 
     //get the index of the highest probability
     final topPrediction = probabilites.indexWhere((probablity) =>
         probablity == probabilites.reduce((a, b) => a > b ? a : b));
 
-    log("==============>>>==============>>>>==========>");
-    print("topPrediction: $topPrediction");
-    log("==============>>>==============>>>>==========>");
+    return topPrediction;
   }
 }
