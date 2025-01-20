@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_recognition/src/widgets/native_slider.dart';
 
+import '../../../core/api_config.dart';
 import '../../../providers/image/image_provider.dart';
 import '../view_model/home_screen_view_model.dart';
 import 'widgets/camera_view.dart';
@@ -34,22 +37,31 @@ class HomeScreen extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 24,
           children: [
-            AnimatedContainer(
-              height: 50,
-              width: 150,
-              curve: Curves.bounceOut,
-              duration: Duration(milliseconds: 1000),
-              decoration: BoxDecoration(
-                color: Colors.lightBlue,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Text(
-                "Recognized",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+            SizedBox(
+                height: 100,
+                width: MediaQuery.sizeOf(context).width,
+                child: NativeSlider()),
+            GestureDetector(
+              onTap: () {
+                print("flavor :: $appFlavor");
+              },
+              child: AnimatedContainer(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                curve: Curves.bounceOut,
+                duration: Duration(milliseconds: 1000),
+                decoration: BoxDecoration(
+                  color: Colors.lightBlue,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: Text(
+                  ApiConfig.baseUrl,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

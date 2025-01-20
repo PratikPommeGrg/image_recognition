@@ -1,0 +1,17 @@
+<resources>
+    <!-- Define primary and secondary colors -->
+    <color name="primary">#6200EE</color> <!-- Replace with your desired color -->
+    <color name="secondary">#03DAC5</color> <!-- Replace with your desired color -->
+
+    <!-- Optionally add other theme-related colors -->
+    <color name="primaryVariant">#3700B3</color>
+    <color name="secondaryVariant">#018786</color>
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="error">#B00020</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onSecondary">#000000</color>
+    <color name="onBackground">#000000</color>
+    <color name="onSurface">#000000</color>
+    <color name="onError">#FFFFFF</color>
+</resources>
